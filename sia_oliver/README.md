@@ -1,4 +1,4 @@
-# Setting up mdBooK
+# Setting up mdBook
 
 My tutorial assignment has been written using mdbook. Please follow the instruction below:
 
