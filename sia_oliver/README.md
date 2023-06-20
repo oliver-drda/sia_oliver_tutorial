@@ -1,12 +1,20 @@
-# trilitech_task
+# Setting up mdBooK
 
-To see work run the following in you're terminal:
+My tutorial assignment has been written using mdbook. Please follow the instruction below:
 
-1) git clone https://github.com/iooa0023/trilitech_task.git
+1) Install Rust  and Cargo
+   `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
-2) cd ../trilitech_task/trilitech_task
+2) Install mdBook
+   `cargo install mdbook`
 
-3) mdbook serve
+3) Install admonshins
 
+   `cargo install mdbook-admonshin`
+   `cargo install mdbook-admonish`
 
-Should get a localhost address to look at task.
+4) git clone https://github.com/iooa0023/trilitech_task.git
+
+2) cd ../sia_oliver/sia_oliver
+
+3) Run mdbook serve. Should get a localhost address to look at the markdown locally.
