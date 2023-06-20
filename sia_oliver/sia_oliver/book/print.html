@@ -1,0 +1,1197 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sia Foundation</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/pagetoc.css">
+        <link rel="stylesheet" href="././mdbook-admonish.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Tutorials</li><li class="chapter-item "><a href="tutorials/introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="tutorials/page-1.0.html"><strong aria-hidden="true">2.</strong> Tutorials</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="tutorials/page-1.0.html"><strong aria-hidden="true">2.1.</strong> Migrating from AWS Bucket to renterd</a></li></ol></li><li class="chapter-item "><a href="tutorials/page-1.1.1.html"><strong aria-hidden="true">3.</strong> Distribution Strategy</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="tutorials/page-1.1.1.html"><strong aria-hidden="true">3.1.</strong> Publishing a blog post on Medium</a></li><li class="chapter-item "><a href="tutorials/page-1.1.2.html"><strong aria-hidden="true">3.2.</strong> Syndicating the content across multiple channels</a></li><li class="chapter-item "><a href="tutorials/page-1.1.3.html"><strong aria-hidden="true">3.3.</strong> Turning the written text into multimedia content</a></li><li class="chapter-item "><a href="tutorials/page-1.1.4.html"><strong aria-hidden="true">3.4.</strong> Engaging with developer communities on social media</a></li><li class="chapter-item "><a href="tutorials/page-1.1.5.html"><strong aria-hidden="true">3.5.</strong> Offering incentives</a></li><li class="chapter-item "><a href="tutorials/page-1.1.6.html"><strong aria-hidden="true">3.6.</strong> ...A few more</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sia Foundation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <h1 id="the-sia-foundation"><a class="header" href="#the-sia-foundation"><img src='images/sia_logo.png' style="float: right; width: 75px; height: 75px;"> The Sia Foundation</a></h1>
+<h3 id="what-is-sia"><a class="header" href="#what-is-sia">What is Sia?</a></h3>
+<p>Sia is a decentralized cloud storage platform that enables users to securely store and retrieve data. It utilizes blockchain technology and a p2p network to establish a decentralized storage marketplace. Its mission is to commoditize data storage, making it affordable, ubiquitous, and accessible to all while safeguarding privacy and performance.</p>
+<p>The goals and responsibilities of the Sia Foundation are numerous: </p>
+<ul>
+<li>To maintain core Sia protocols and consensus code; to support developers building on top of Sia and its protocols.</li>
+<li>To promote Sia and facilitate partnerships in other spheres and communities.</li>
+<li>To ensure that users can easily acquire and safely store siacoins.</li>
+<li>To develop network scalability solutions.</li>
+<li>To implement hardforks and lead the community through them.</li>
+</ul>
+<p>… and so much <a href="https://docs.sia.tech/get-started-with-sia/sia101">more</a>! </p>
+<h3 id="what-is-decentralization-storage"><a class="header" href="#what-is-decentralization-storage">What is Decentralization Storage?</a></h3>
+<p>Decentralized storage refers to a storage system where data is distributed across multiple nodes in a network rather than being stored in a central location. This approach offers increased security, data redundancy, and availability compared to traditional centralized storage systems.</p>
+<h3 id="what-is-renterd"><a class="header" href="#what-is-renterd">What is <code>renterd</code>?</a></h3>
+<p><code>renterd</code> is the official renter component of the Sia network. It provides the functionality to manage files, upload and download data, and interact with the Sia network.</p>
+<p>Checkout our <code>renterd</code> <a href="https://github.com/SiaFoundation/renterd/wiki">wiki</a> for more!</p>
+<div id="admonition-sia-simple-decentralized-storage" class="admonition tip">
+<div class="admonition-title">
+<p>Sia: Simple Decentralized Storage</p>
+<p><a class="admonition-anchor-link" href="tutorials/introduction.html#admonition-sia-simple-decentralized-storage"></a></p>
+</div>
+<div>
+<p>If you’re interested in learning more about Sia and its innovative approach to decentralized cloud storage, check out our comprehensive <a href="https://sia.tech/sia.pdf">whitepaper</a>.</p>
+</div>
+</div>
+<div id="admonition-join-our-communities" class="admonition info">
+<div class="admonition-title">
+<p>Join our Communities!</p>
+<p><a class="admonition-anchor-link" href="tutorials/introduction.html#admonition-join-our-communities"></a></p>
+</div>
+<div>
+<p>Join our vibrant communities to discover the full potential of the Sia platform and join the conversation today!</p>
+<p><a href="https://discord.com/invite/sia">Discord</a></p>
+<p><a href="https://www.reddit.com/r/siacoin">Reddit</a></p>
+<p><a href="https://twitter.com/sia__foundation">Twitter</a></p>
+<p><a href="https://github.com/SiaFoundation">Github</a></p>
+<p><a href="https://forum.sia.tech">Sia Forum</a></p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="migrating-files-from-an-aws-bucket-to-renterd"><a class="header" href="#migrating-files-from-an-aws-bucket-to-renterd">Migrating Files from an AWS Bucket to <code>renterd</code></a></h1>
+<p><span class="highlight">Go</span>
+<span class="highlight">macOS</span>
+<span class="highlight">AWSBucket</span>
+<span class="highlight">macOS</span>
+<span class="highlight">renterd</span></p>
+<p>This tutorial will guide you through the process of building a utility in Go that retrieve files from an AWS bucket to <code>renterd</code>. We will cover the following topics:</p>
+<ol>
+<li>Installing the AWS SDK</li>
+<li>Setting up AWS credentials</li>
+<li>Preparing your Bucket</li>
+<li>Listing files in an AWS bucket</li>
+<li>Migrating files from the AWS bucket to <code>renterd</code></li>
+</ol>
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<h4 id="brew"><a class="header" href="#brew">Brew</a></h4>
+<p>To install <code>Homebrew</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>brew --version
+</code></pre>
+<h4 id="aws-cli"><a class="header" href="#aws-cli">AWS CLI</a></h4>
+<p>To install <code>AWS CLI</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>brew install awscli
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>aws --version
+</code></pre>
+<div id="admonition-note" class="admonition warning">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-note"></a></p>
+</div>
+<div>
+<p>For the purpose of this tutorial, we will be demonstrating the process in Go. Go is the native language of the Sia platform, but feel free to adapt the concepts and logic presented here to your preferred programming language of choice by visiting <a href="https://docs.aws.amazon.com">here</a> to find AWS software development kits (SDKs).</p>
+</div>
+</div>
+#### Go
+<ol>
+<li>Before we begin, please make sure you have Go installed on your machine. You can download and <a href="https://golang.org">install Go</a> from the official website. Go is available on the following operating systems and versions:</li>
+</ol>
+<ul>
+<li><strong>Microsoft Windows</strong>: Windows 7 or later, Intel 64-bit processor.</li>
+<li><strong>Apple macOS (ARM64)</strong>: macOS 11 or later, Apple 64-bit processor.</li>
+<li><strong>Apple macOS (x86-64)</strong>: macOS 10.13 or later, intel 64-bit processor.</li>
+<li><strong>Linux</strong>: 2.6.32 or later, intel 64-bit processor.</li>
+</ul>
+<ol start="2">
+<li>Install Go and once the download is complete, open the downloaded package file <code>(.pkg)</code> and follow the instructions to install Go on your system. The installer will guide you through the installation process.</li>
+</ol>
+<h4 id="tutuorial-folder"><a class="header" href="#tutuorial-folder">Tutuorial Folder</a></h4>
+<p>Create a new directory for your <code>tutorial</code>, and <code>path/to/tutorial</code> then run:</p>
+<pre><code>go mod init your-project-name
+</code></pre>
+<h3 id="1-installing-the-aws-sdk"><a class="header" href="#1-installing-the-aws-sdk">1. Installing the AWS SDK</a></h3>
+<div id="admonition-heres-a-helping-hand" class="admonition info">
+<div class="admonition-title">
+<p>Here’s a helping hand!</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-heres-a-helping-hand"></a></p>
+</div>
+<div>
+<p>If you’re new to AWS (Amazon Workflow Services), these helpful links:</p>
+<ul>
+<li>Familiarise yourself with <a href="https://aws.amazon.com/what-is-aws/">AWS</a> and the <a href="https://docs.aws.amazon.com/sdk-for-go/api/#:~:text=The%20AWS%20SDK%20for%20Go,against%20a%20web%20service%20interface.">AWS SDK for Go</a>.</li>
+<li>Basic understanding of <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_query-requests.html">HTTP requests</a>.</li>
+</ul>
+</div>
+</div>
+<p>To interact with AWS services, we need to install the AWS SDK for Go. The SDK provides us with the necessary libraries and tools to work with AWS services, including Amazon S3.</p>
+<p>Open up your terminal and run the following command:</p>
+<pre><code class="language-shell">go get github.com/aws/aws-sdk-go@latest
+</code></pre>
+<p>This command installs the latest AWS SDK for Go and its dependencies.</p>
+<h3 id="2-setting-up-aws-credentials"><a class="header" href="#2-setting-up-aws-credentials">2. Setting up AWS credentials</a></h3>
+<p>To access your AWS bucket, you need to set up your AWS credentials. These credentials consist of an Access Key ID and Secret Access Key associated with an IAM user that has the necessary permissions to access the AWS bucket.</p>
+<ol>
+<li>Go to your <a href="https://console.aws.amazon.com/console/home">AWS Management Console</a> and sign in. If you haven’t got an account create a new AWS account by completing the 5-step account creation process.</li>
+</ol>
+<div id="admonition-warning" class="admonition warning">
+<div class="admonition-title">
+<p>Warning</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-warning"></a></p>
+</div>
+<div>
+<p>Your credit/debit card information will be requested in the account creation process so keep this handy.</p>
+</div>
+</div>
+<ol start="2">
+<li>
+<p>Open the IAM service by searching for “IAM” in the AWS Management Console search bar and selecting the IAM service.</p>
+</li>
+<li>
+<p>Create a new IAM user or use an existing one that has the necessary permissions to access the AWS bucket. </p>
+<p>a) This can be done firstly by clicking the “Users” link on the dashboard. Once the page, click the “Add Users” button to start creating a new IAM user. Then provide a name for the user in the “User name” field.</p>
+<p>b) When creating a new IAM user or using an existing one, choose an appropriate permission model based on your requirements. For the purpose of this tutorial, choose “Attach existing policies directly”, search for the <code>AmazonS3FullAccess</code> policy, and check the box next.</p>
+<p>c) Review the settings, click “Next,” add any optional tags, proceed to review the user’s details, and finally click “Create user.”</p>
+<p>d) The <code>access_key_id</code> and <code>secret_access_key</code> forthe new user will have not be created yet, but you can do this manually. After creating the user, you’ll be redirected to the “Users” page. Now click on the newly created user account. Click the “Security credentials” tab and scroll down to the “Access Keys” section and press “Create Access key”.</p>
+<p>e) You should now see a page called “Access key best practices &amp;  alternatives”. Select the “Command Line Interface” option and remember to check the at the bottom before proceeding by pressing “Next”.</p>
+<p>f) You can decide to create tags, but it’s not neccessary. Press the “Create Access Key” to generate the <code>access_key_id</code> and <code>secret_access_key</code>. </p>
+</li>
+</ol>
+<div id="admonition-make-a-note" class="admonition info">
+<div class="admonition-title">
+<p>Make a Note!</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-make-a-note"></a></p>
+</div>
+<div>
+<p>Take note of the <code>access_key_id</code> and <code>secret_access_key</code> generated for the new user, as these credentials will be needed for programmatically accessing the S3 bucket.</p>
+</div>
+</div>
+<ol start="4">
+<li>Return back to your terminal to run the following command to configure the AWS CLI:</li>
+</ol>
+<pre><code class="language-shell">aws configure
+</code></pre>
+<ol start="5">
+<li>
+<p>Enter your <code>access_key_id</code> and <code>secret_access_key</code> when prompted.</p>
+</li>
+<li>
+<p>Choose a default AWS Region (e.g., <code>us-east-1</code>) and leave the output format as default.</p>
+</li>
+<li>
+<p>Set the output format as <code>json</code>.</p>
+</li>
+</ol>
+<div id="admonition-default" class="admonition success">
+<div>
+<p>Congratulations! The AWS CLI has saved the credentials in a configuration file located in your user’s home directory. The AWS CLI configuration is independent of your Go project. It sets up the credentials globally on your machine, and the Go SDK will automatically use them.</p>
+</div>
+</div>
+<h3 id="3-preparing-your-bucket"><a class="header" href="#3-preparing-your-bucket">3. Preparing your Bucket.</a></h3>
+<ol>
+<li>
+<p>Return back AWS Access Management page of your existing account, on “Users” page, click on the newly created user account. Click the “Security credentials” tab begin the enablement of the User to access the AWS Management Console by pressing the “Enable Console Access” button in the “Console sign-in” section.</p>
+</li>
+<li>
+<p>On the “User” page of the newly created user, there is a link in this format <code>hhtps://&lt;12-digit-account-id&gt;.signin.aws.amazon.com/console</code>, that will give you direct access to log into the AWS Access Management specific to the new user you’ve created.</p>
+</li>
+<li>
+<p>Login using <code>account_id</code> (should auto-populate after using the link), <code>iam_user_name</code>, and <code>password</code>. Once you’ve logged in, navigate to the S3 service on the “Console Home”.</p>
+</li>
+<li>
+<p>Let’s start uploading the files in the AWS bucket to see what we have for the listing segment of the tutorial. For the testing purposes, we can create 3 dummy text files (i.e., <code>file-1.rtf</code> <code>file-2.rtf</code> <code>file-3.rtf</code>). Upload these to the bucket for the next steps. </p>
+</li>
+</ol>
+<div id="admonition-cant-see-any-buckets" class="admonition info">
+<div class="admonition-title">
+<p>Can’t see any Buckets?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-cant-see-any-buckets"></a></p>
+</div>
+<div>
+<p>If you can’t see any buckets in the AWS S3 console, it may be because you haven’t created any buckets yet. Here are the steps to create a bucket:</p>
+<p>a) Click on the “Create bucket” button.</p>
+<p>b) Enter a name for your bucket, choose a region, and click “Create bucket”.</p>
+<p>c) Your new bucket should now appear in the list of buckets on the S3 console. Once you have created a bucket, you can upload files to it.</p>
+</div>
+</div>
+<h3 id="3-listing-files-in-an-aws-bucket"><a class="header" href="#3-listing-files-in-an-aws-bucket">3. Listing files in an AWS bucket</a></h3>
+<p>Now we can start by creating a <code>listfiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;log&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the list of files
+	for _, file := range files {
+		fmt.Println(file)
+	}
+}
+
+</code></pre>
+<div id="admonition-what-is-this-doing" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-what-is-this-doing"></a></p>
+</div>
+<div>
+<p>In this code snippet, we use the AWS SDK for Go to list objects in the specified AWS bucket. </p>
+<ul>
+<li>We create an AWS session and configure it with the desired AWS region.</li>
+<li>Using the session, we create an S3 service client.</li>
+<li>We specify the bucket name we want tolist objects from.</li>
+<li>We call the <code>ListObjectsV2</code> method on the S3 service client, passing the bucket name in the <code>Bucket</code> field of the <code>ListObjectsV2Input</code> struct.</li>
+<li>The response contains a list of objects in the bucket, and we iterate over them, printing out the object names.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run listfiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-expected-output"></a></p>
+</div>
+<div>
+<pre><code>mypctest@tests-MacBook-Pro tutorial % go run listfiles.go
+file-1.rtf
+file-2.rtf
+file-3.rtf
+</code></pre>
+</div>
+</div>
+<div id="admonition-default-1" class="admonition success">
+<div>
+<p>Congratulations! This part of the tutorial helps us verify that we can successfully connect to the AWS bucket and retrieve a list of objects.</p>
+</div>
+</div>
+<h3 id="4-migrating-files-from-the-aws-bucket-to-renterd"><a class="header" href="#4-migrating-files-from-the-aws-bucket-to-renterd">4. Migrating files from the AWS bucket to <code>renterd</code></a></h3>
+<p>Now we can move on to migrating files from the AWS bucket to <code>renterd</code>. For the purpose of this tutorial, we will use the mocked <code>renterd</code> API endpoints instead of setting up a <code>renterd</code> node.</p>
+<p>Start by creating a <code>migratefiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;bytes&quot;
+	&quot;fmt&quot;
+	&quot;io/ioutil&quot;
+	&quot;log&quot;
+	&quot;mime/multipart&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+// Function to upload a file to the renterd API
+func uploadFileToRenterd(filePath string) error {
+	// Open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Create a new multipart buffer
+	body := &amp;bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	// Create a new form file field
+	part, err := writer.CreateFormFile(&quot;file&quot;, filePath)
+	if err != nil {
+		return err
+	}
+
+	// Read the file content and write it to the form field
+	fileContent, err := ioutil.ReadAll(file)
+	if err != nil {
+		return err
+	}
+	_, err = part.Write(fileContent)
+	if err != nil {
+		return err
+	}
+
+	// Close the writer
+	err = writer.Close()
+	if err != nil {
+		return err
+	}
+
+	// Create a new HTTP request to the renterd API endpoint
+	request, err := http.NewRequest(http.MethodPut, &quot;https://renterd-mock.sia.tools/api/worker/objects/&quot;+filePath, body)
+	if err != nil {
+		return err
+	}
+	request.Header.Set(&quot;Content-Type&quot;, writer.FormDataContentType())
+	request.SetBasicAuth(&quot;&quot;, &quot;&lt;auth-token&gt;&quot;) // Replace with the actual authentication token
+
+	// Make the request
+	client := &amp;http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	// Check the response status code
+	if response.StatusCode != http.StatusOK {
+		return fmt.Errorf(&quot;file upload failed with status code: %d&quot;, response.StatusCode)
+	}
+
+	return nil
+}
+
+// Function to list files in an AWS bucket
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Iterate over the list of files and upload each file to renterd
+	for _, file := range files {
+		err := uploadFileToRenterd(file)
+		if err != nil {
+			log.Println(&quot;Failed to upload file&quot;, file, &quot;:&quot;, err)
+		} else {
+			log.Println(&quot;File&quot;, file, &quot;uploaded successfully&quot;)
+		}
+	}
+}
+</code></pre>
+<div id="admonition-what-is-this-doing-1" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-what-is-this-doing-1"></a></p>
+</div>
+<div>
+<p>This code snippet demonstrates how to migrate a file from the AWS bucket to <code>renterd</code> using the mocked <code>renterd</code> API endpoints. Here’s a breakdown of the code:</p>
+<ul>
+<li>We specify the AWS bucket URL and the <code>renterd</code> upload endpoint URL. You should replace these URLs with your actual values.</li>
+<li>We specify the object key (filename) of the file we want to migrate. In this particular case, we made it so it selects them all.</li>
+<li>We use the <code>http.Get</code> function to download the object from the AWS bucket.</li>
+<li>We create an upload request to the <code>renterd</code> API endpoint by creating an <code>http.NewRequest</code> with the <code>PUT</code> method and the <code>renterd</code> upload URL.</li>
+<li>We set the required HTTP basic authentication header using <code>req.SetBasicAuth</code> with an empty username and the provided auth token.</li>
+<li>We send the upload request using <code>client.Do(req)</code>.</li>
+<li>Finally, we check the response status. If it’s not <code>http.StatusOK</code>, we consider the upload as unsuccessful.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run migratefiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output-1" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-expected-output-1"></a></p>
+</div>
+<div>
+<pre><code>2023/06/20 18:03:37 File file-1.rtf uploaded successfully
+2023/06/20 18:03:37 File file-2.rtf uploaded successfully
+2023/06/20 18:03:37 File file-3.rtf uploaded successfully
+</code></pre>
+</div>
+</div>
+<div id="admonition-youve-done-it" class="admonition success">
+<div class="admonition-title">
+<p>YOU’VE DONE IT🎉</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-youve-done-it"></a></p>
+</div>
+<div>
+<p>Congratulations! </p>
+<p>You’ve built a utility in Go that allows us to migrate files from an AWS bucket to <code>renterd</code>. Here’s what you’ve accomplished, accomplish the following:</p>
+<p><strong>Installation of the AWS SDK</strong>: You’ve installed the AWS SDK for Go, which provides the necessary libraries and tools to interact with AWS services, including Amazon S3.</p>
+<p><strong>Setting up AWS credentials</strong>: You’ve configured the AWS credentials, consisting of an Access Key ID and Secret Access Key, to authenticate and access our AWS bucket,ensures that you have the necessary permissions to retrieve files from the bucket.</p>
+<p><strong>Prepared your Bucket</strong>: You’ve set up an AWS bucket environment for where you can test Listing and Migrate files.</p>
+<p><strong>Listing files in an AWS bucket</strong>: You’ve utilize the AWS SDK for Go to list the objects/files present in the AWS bucket. This step helps us verify our connectivity to the bucket and retrieve a list of files that can be migrated.</p>
+<p><strong>Migrating files from the AWS bucket to <code>renterd</code></strong>: You’ve demonstrated the process of migrating a file from the AWS bucket to <code>renterd</code>using the appropriate API endpoint. This step showcases the file migration process and confirms that the migration was successful.</p>
+</div>
+</div>
+<p>To get ahold of the complete tutorial, visit (Github)[]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="migrating-files-from-an-aws-bucket-to-renterd-1"><a class="header" href="#migrating-files-from-an-aws-bucket-to-renterd-1">Migrating Files from an AWS Bucket to <code>renterd</code></a></h1>
+<p><span class="highlight">Go</span>
+<span class="highlight">macOS</span>
+<span class="highlight">AWSBucket</span>
+<span class="highlight">macOS</span>
+<span class="highlight">renterd</span></p>
+<p>This tutorial will guide you through the process of building a utility in Go that retrieve files from an AWS bucket to <code>renterd</code>. We will cover the following topics:</p>
+<ol>
+<li>Installing the AWS SDK</li>
+<li>Setting up AWS credentials</li>
+<li>Preparing your Bucket</li>
+<li>Listing files in an AWS bucket</li>
+<li>Migrating files from the AWS bucket to <code>renterd</code></li>
+</ol>
+<h3 id="prerequisites-1"><a class="header" href="#prerequisites-1">Prerequisites</a></h3>
+<h4 id="brew-1"><a class="header" href="#brew-1">Brew</a></h4>
+<p>To install <code>Homebrew</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>brew --version
+</code></pre>
+<h4 id="aws-cli-1"><a class="header" href="#aws-cli-1">AWS CLI</a></h4>
+<p>To install <code>AWS CLI</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>brew install awscli
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>aws --version
+</code></pre>
+<div id="admonition-note" class="admonition warning">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-note"></a></p>
+</div>
+<div>
+<p>For the purpose of this tutorial, we will be demonstrating the process in Go. Go is the native language of the Sia platform, but feel free to adapt the concepts and logic presented here to your preferred programming language of choice by visiting <a href="https://docs.aws.amazon.com">here</a> to find AWS software development kits (SDKs).</p>
+</div>
+</div>
+#### Go
+<ol>
+<li>Before we begin, please make sure you have Go installed on your machine. You can download and <a href="https://golang.org">install Go</a> from the official website. Go is available on the following operating systems and versions:</li>
+</ol>
+<ul>
+<li><strong>Microsoft Windows</strong>: Windows 7 or later, Intel 64-bit processor.</li>
+<li><strong>Apple macOS (ARM64)</strong>: macOS 11 or later, Apple 64-bit processor.</li>
+<li><strong>Apple macOS (x86-64)</strong>: macOS 10.13 or later, intel 64-bit processor.</li>
+<li><strong>Linux</strong>: 2.6.32 or later, intel 64-bit processor.</li>
+</ul>
+<ol start="2">
+<li>Install Go and once the download is complete, open the downloaded package file <code>(.pkg)</code> and follow the instructions to install Go on your system. The installer will guide you through the installation process.</li>
+</ol>
+<h4 id="tutuorial-folder-1"><a class="header" href="#tutuorial-folder-1">Tutuorial Folder</a></h4>
+<p>Create a new directory for your <code>tutorial</code>, and <code>path/to/tutorial</code> then run:</p>
+<pre><code>go mod init your-project-name
+</code></pre>
+<h3 id="1-installing-the-aws-sdk-1"><a class="header" href="#1-installing-the-aws-sdk-1">1. Installing the AWS SDK</a></h3>
+<div id="admonition-heres-a-helping-hand" class="admonition info">
+<div class="admonition-title">
+<p>Here’s a helping hand!</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-heres-a-helping-hand"></a></p>
+</div>
+<div>
+<p>If you’re new to AWS (Amazon Workflow Services), these helpful links:</p>
+<ul>
+<li>Familiarise yourself with <a href="https://aws.amazon.com/what-is-aws/">AWS</a> and the <a href="https://docs.aws.amazon.com/sdk-for-go/api/#:~:text=The%20AWS%20SDK%20for%20Go,against%20a%20web%20service%20interface.">AWS SDK for Go</a>.</li>
+<li>Basic understanding of <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_query-requests.html">HTTP requests</a>.</li>
+</ul>
+</div>
+</div>
+<p>To interact with AWS services, we need to install the AWS SDK for Go. The SDK provides us with the necessary libraries and tools to work with AWS services, including Amazon S3.</p>
+<p>Open up your terminal and run the following command:</p>
+<pre><code class="language-shell">go get github.com/aws/aws-sdk-go@latest
+</code></pre>
+<p>This command installs the latest AWS SDK for Go and its dependencies.</p>
+<h3 id="2-setting-up-aws-credentials-1"><a class="header" href="#2-setting-up-aws-credentials-1">2. Setting up AWS credentials</a></h3>
+<p>To access your AWS bucket, you need to set up your AWS credentials. These credentials consist of an Access Key ID and Secret Access Key associated with an IAM user that has the necessary permissions to access the AWS bucket.</p>
+<ol>
+<li>Go to your <a href="https://console.aws.amazon.com/console/home">AWS Management Console</a> and sign in. If you haven’t got an account create a new AWS account by completing the 5-step account creation process.</li>
+</ol>
+<div id="admonition-warning" class="admonition warning">
+<div class="admonition-title">
+<p>Warning</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-warning"></a></p>
+</div>
+<div>
+<p>Your credit/debit card information will be requested in the account creation process so keep this handy.</p>
+</div>
+</div>
+<ol start="2">
+<li>
+<p>Open the IAM service by searching for “IAM” in the AWS Management Console search bar and selecting the IAM service.</p>
+</li>
+<li>
+<p>Create a new IAM user or use an existing one that has the necessary permissions to access the AWS bucket. </p>
+<p>a) This can be done firstly by clicking the “Users” link on the dashboard. Once the page, click the “Add Users” button to start creating a new IAM user. Then provide a name for the user in the “User name” field.</p>
+<p>b) When creating a new IAM user or using an existing one, choose an appropriate permission model based on your requirements. For the purpose of this tutorial, choose “Attach existing policies directly”, search for the <code>AmazonS3FullAccess</code> policy, and check the box next.</p>
+<p>c) Review the settings, click “Next,” add any optional tags, proceed to review the user’s details, and finally click “Create user.”</p>
+<p>d) The <code>access_key_id</code> and <code>secret_access_key</code> forthe new user will have not be created yet, but you can do this manually. After creating the user, you’ll be redirected to the “Users” page. Now click on the newly created user account. Click the “Security credentials” tab and scroll down to the “Access Keys” section and press “Create Access key”.</p>
+<p>e) You should now see a page called “Access key best practices &amp;  alternatives”. Select the “Command Line Interface” option and remember to check the at the bottom before proceeding by pressing “Next”.</p>
+<p>f) You can decide to create tags, but it’s not neccessary. Press the “Create Access Key” to generate the <code>access_key_id</code> and <code>secret_access_key</code>. </p>
+</li>
+</ol>
+<div id="admonition-make-a-note" class="admonition info">
+<div class="admonition-title">
+<p>Make a Note!</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-make-a-note"></a></p>
+</div>
+<div>
+<p>Take note of the <code>access_key_id</code> and <code>secret_access_key</code> generated for the new user, as these credentials will be needed for programmatically accessing the S3 bucket.</p>
+</div>
+</div>
+<ol start="4">
+<li>Return back to your terminal to run the following command to configure the AWS CLI:</li>
+</ol>
+<pre><code class="language-shell">aws configure
+</code></pre>
+<ol start="5">
+<li>
+<p>Enter your <code>access_key_id</code> and <code>secret_access_key</code> when prompted.</p>
+</li>
+<li>
+<p>Choose a default AWS Region (e.g., <code>us-east-1</code>) and leave the output format as default.</p>
+</li>
+<li>
+<p>Set the output format as <code>json</code>.</p>
+</li>
+</ol>
+<div id="admonition-default" class="admonition success">
+<div>
+<p>Congratulations! The AWS CLI has saved the credentials in a configuration file located in your user’s home directory. The AWS CLI configuration is independent of your Go project. It sets up the credentials globally on your machine, and the Go SDK will automatically use them.</p>
+</div>
+</div>
+<h3 id="3-preparing-your-bucket-1"><a class="header" href="#3-preparing-your-bucket-1">3. Preparing your Bucket.</a></h3>
+<ol>
+<li>
+<p>Return back AWS Access Management page of your existing account, on “Users” page, click on the newly created user account. Click the “Security credentials” tab begin the enablement of the User to access the AWS Management Console by pressing the “Enable Console Access” button in the “Console sign-in” section.</p>
+</li>
+<li>
+<p>On the “User” page of the newly created user, there is a link in this format <code>hhtps://&lt;12-digit-account-id&gt;.signin.aws.amazon.com/console</code>, that will give you direct access to log into the AWS Access Management specific to the new user you’ve created.</p>
+</li>
+<li>
+<p>Login using <code>account_id</code> (should auto-populate after using the link), <code>iam_user_name</code>, and <code>password</code>. Once you’ve logged in, navigate to the S3 service on the “Console Home”.</p>
+</li>
+<li>
+<p>Let’s start uploading the files in the AWS bucket to see what we have for the listing segment of the tutorial. For the testing purposes, we can create 3 dummy text files (i.e., <code>file-1.rtf</code> <code>file-2.rtf</code> <code>file-3.rtf</code>). Upload these to the bucket for the next steps. </p>
+</li>
+</ol>
+<div id="admonition-cant-see-any-buckets" class="admonition info">
+<div class="admonition-title">
+<p>Can’t see any Buckets?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-cant-see-any-buckets"></a></p>
+</div>
+<div>
+<p>If you can’t see any buckets in the AWS S3 console, it may be because you haven’t created any buckets yet. Here are the steps to create a bucket:</p>
+<p>a) Click on the “Create bucket” button.</p>
+<p>b) Enter a name for your bucket, choose a region, and click “Create bucket”.</p>
+<p>c) Your new bucket should now appear in the list of buckets on the S3 console. Once you have created a bucket, you can upload files to it.</p>
+</div>
+</div>
+<h3 id="3-listing-files-in-an-aws-bucket-1"><a class="header" href="#3-listing-files-in-an-aws-bucket-1">3. Listing files in an AWS bucket</a></h3>
+<p>Now we can start by creating a <code>listfiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;log&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the list of files
+	for _, file := range files {
+		fmt.Println(file)
+	}
+}
+
+</code></pre>
+<div id="admonition-what-is-this-doing" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-what-is-this-doing"></a></p>
+</div>
+<div>
+<p>In this code snippet, we use the AWS SDK for Go to list objects in the specified AWS bucket. </p>
+<ul>
+<li>We create an AWS session and configure it with the desired AWS region.</li>
+<li>Using the session, we create an S3 service client.</li>
+<li>We specify the bucket name we want tolist objects from.</li>
+<li>We call the <code>ListObjectsV2</code> method on the S3 service client, passing the bucket name in the <code>Bucket</code> field of the <code>ListObjectsV2Input</code> struct.</li>
+<li>The response contains a list of objects in the bucket, and we iterate over them, printing out the object names.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run listfiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-expected-output"></a></p>
+</div>
+<div>
+<pre><code>mypctest@tests-MacBook-Pro tutorial % go run listfiles.go
+file-1.rtf
+file-2.rtf
+file-3.rtf
+</code></pre>
+</div>
+</div>
+<div id="admonition-default-1" class="admonition success">
+<div>
+<p>Congratulations! This part of the tutorial helps us verify that we can successfully connect to the AWS bucket and retrieve a list of objects.</p>
+</div>
+</div>
+<h3 id="4-migrating-files-from-the-aws-bucket-to-renterd-1"><a class="header" href="#4-migrating-files-from-the-aws-bucket-to-renterd-1">4. Migrating files from the AWS bucket to <code>renterd</code></a></h3>
+<p>Now we can move on to migrating files from the AWS bucket to <code>renterd</code>. For the purpose of this tutorial, we will use the mocked <code>renterd</code> API endpoints instead of setting up a <code>renterd</code> node.</p>
+<p>Start by creating a <code>migratefiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;bytes&quot;
+	&quot;fmt&quot;
+	&quot;io/ioutil&quot;
+	&quot;log&quot;
+	&quot;mime/multipart&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+// Function to upload a file to the renterd API
+func uploadFileToRenterd(filePath string) error {
+	// Open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Create a new multipart buffer
+	body := &amp;bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	// Create a new form file field
+	part, err := writer.CreateFormFile(&quot;file&quot;, filePath)
+	if err != nil {
+		return err
+	}
+
+	// Read the file content and write it to the form field
+	fileContent, err := ioutil.ReadAll(file)
+	if err != nil {
+		return err
+	}
+	_, err = part.Write(fileContent)
+	if err != nil {
+		return err
+	}
+
+	// Close the writer
+	err = writer.Close()
+	if err != nil {
+		return err
+	}
+
+	// Create a new HTTP request to the renterd API endpoint
+	request, err := http.NewRequest(http.MethodPut, &quot;https://renterd-mock.sia.tools/api/worker/objects/&quot;+filePath, body)
+	if err != nil {
+		return err
+	}
+	request.Header.Set(&quot;Content-Type&quot;, writer.FormDataContentType())
+	request.SetBasicAuth(&quot;&quot;, &quot;&lt;auth-token&gt;&quot;) // Replace with the actual authentication token
+
+	// Make the request
+	client := &amp;http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	// Check the response status code
+	if response.StatusCode != http.StatusOK {
+		return fmt.Errorf(&quot;file upload failed with status code: %d&quot;, response.StatusCode)
+	}
+
+	return nil
+}
+
+// Function to list files in an AWS bucket
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Iterate over the list of files and upload each file to renterd
+	for _, file := range files {
+		err := uploadFileToRenterd(file)
+		if err != nil {
+			log.Println(&quot;Failed to upload file&quot;, file, &quot;:&quot;, err)
+		} else {
+			log.Println(&quot;File&quot;, file, &quot;uploaded successfully&quot;)
+		}
+	}
+}
+</code></pre>
+<div id="admonition-what-is-this-doing-1" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-what-is-this-doing-1"></a></p>
+</div>
+<div>
+<p>This code snippet demonstrates how to migrate a file from the AWS bucket to <code>renterd</code> using the mocked <code>renterd</code> API endpoints. Here’s a breakdown of the code:</p>
+<ul>
+<li>We specify the AWS bucket URL and the <code>renterd</code> upload endpoint URL. You should replace these URLs with your actual values.</li>
+<li>We specify the object key (filename) of the file we want to migrate. In this particular case, we made it so it selects them all.</li>
+<li>We use the <code>http.Get</code> function to download the object from the AWS bucket.</li>
+<li>We create an upload request to the <code>renterd</code> API endpoint by creating an <code>http.NewRequest</code> with the <code>PUT</code> method and the <code>renterd</code> upload URL.</li>
+<li>We set the required HTTP basic authentication header using <code>req.SetBasicAuth</code> with an empty username and the provided auth token.</li>
+<li>We send the upload request using <code>client.Do(req)</code>.</li>
+<li>Finally, we check the response status. If it’s not <code>http.StatusOK</code>, we consider the upload as unsuccessful.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run migratefiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output-1" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-expected-output-1"></a></p>
+</div>
+<div>
+<pre><code>2023/06/20 18:03:37 File file-1.rtf uploaded successfully
+2023/06/20 18:03:37 File file-2.rtf uploaded successfully
+2023/06/20 18:03:37 File file-3.rtf uploaded successfully
+</code></pre>
+</div>
+</div>
+<div id="admonition-youve-done-it" class="admonition success">
+<div class="admonition-title">
+<p>YOU’VE DONE IT🎉</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.0.html#admonition-youve-done-it"></a></p>
+</div>
+<div>
+<p>Congratulations! </p>
+<p>You’ve built a utility in Go that allows us to migrate files from an AWS bucket to <code>renterd</code>. Here’s what you’ve accomplished, accomplish the following:</p>
+<p><strong>Installation of the AWS SDK</strong>: You’ve installed the AWS SDK for Go, which provides the necessary libraries and tools to interact with AWS services, including Amazon S3.</p>
+<p><strong>Setting up AWS credentials</strong>: You’ve configured the AWS credentials, consisting of an Access Key ID and Secret Access Key, to authenticate and access our AWS bucket,ensures that you have the necessary permissions to retrieve files from the bucket.</p>
+<p><strong>Prepared your Bucket</strong>: You’ve set up an AWS bucket environment for where you can test Listing and Migrate files.</p>
+<p><strong>Listing files in an AWS bucket</strong>: You’ve utilize the AWS SDK for Go to list the objects/files present in the AWS bucket. This step helps us verify our connectivity to the bucket and retrieve a list of files that can be migrated.</p>
+<p><strong>Migrating files from the AWS bucket to <code>renterd</code></strong>: You’ve demonstrated the process of migrating a file from the AWS bucket to <code>renterd</code>using the appropriate API endpoint. This step showcases the file migration process and confirms that the migration was successful.</p>
+</div>
+</div>
+<p>To get ahold of the complete tutorial, visit (Github)[]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="publishing-a-blog-post-on-medium"><a class="header" href="#publishing-a-blog-post-on-medium">Publishing a blog post on Medium</a></h1>
+<p>Publishing blog posts on Medium brings many advantages, making an impactful addition to any content strategy. Here are just a few key reasons that illustrate its worth:</p>
+<p><span class="highlight">Reach a Large and Engaged Audience</span>: Medium is an influential platform with an expansive user-base of readers and writers, giving your blog post access to an engaged readership looking out for content across a broad array of subjects. Publishing on Medium makes your post visible and allows it to reach further, possibly drawing in new followers as it increases its readership base.</p>
+<p><span class="highlight">Discoverability and Distribution</span>: Medium’s advanced recommendation system can surface quality content that matches user interests. By publishing on Medium, blog posts have the chance to be recommended to people following similar topics or having shown interest in similar material; this boosts distribution beyond your existing target audience.</p>
+<p><span class="highlight">Engagement and Interaction</span>: Medium is designed as an interactive environment where readers engage with blog posts through comments, highlights and recommendations - providing you with direct connections between you and readers allowing feedback exchange and meaningful dialogues to take place between readers and writers alike. Publishing via Medium unlocks an active community of both readers and writers for maximum interaction potential and relationship formation.</p>
+<p><span class="highlight">SEO Benefits</span>: Medium boasts an outstanding domain authority and search-engine-optimization platform, so when you publish blog posts on Medium they benefit from Medium’s SEO efforts to rank highly on search engine results pages (SERPs). This increases your blog post being found through organic searches bringing more traffic your way.</p>
+<p><span class="highlight">Simple Technical Setup</span>: Medium is designed with minimal technical setup in mind, giving you time and freedom to focus on producing content without managing hosting, domain setup or CMS maintenance responsibilities. With its user-friendly interface and intuitive editor, Medium provides everything needed for writing and formatting blog posts efficiently.</p>
+<p><span class="highlight">Networking and Collaboration</span>: Medium is a platform where writers, thought leaders, professionals and potential collaborators from diverse domains converge. Publishing on Medium makes your work visible to an international network of professionals, influencers and potential collaborators; you have an excellent opportunity for networking as you connect with like-minded individuals as you explore collaboration opportunities that could further extend your reach while building up your reputation.</p>
+<p><span class="highlight">Brand Building and Authority</span>: Publishing high-quality content regularly on Medium helps establish your brand presence and authority within its niche. By sharing insights, expertise and discussing relevant topics you become an authoritative source, resulting in more people trusting what your contributions on Medium have to say over time - creating credibility with their contributions becoming followers for your brand!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="publishing-a-blog-post-on-medium-1"><a class="header" href="#publishing-a-blog-post-on-medium-1">Publishing a blog post on Medium</a></h1>
+<p>Publishing blog posts on Medium brings many advantages, making an impactful addition to any content strategy. Here are just a few key reasons that illustrate its worth:</p>
+<p><span class="highlight">Reach a Large and Engaged Audience</span>: Medium is an influential platform with an expansive user-base of readers and writers, giving your blog post access to an engaged readership looking out for content across a broad array of subjects. Publishing on Medium makes your post visible and allows it to reach further, possibly drawing in new followers as it increases its readership base.</p>
+<p><span class="highlight">Discoverability and Distribution</span>: Medium’s advanced recommendation system can surface quality content that matches user interests. By publishing on Medium, blog posts have the chance to be recommended to people following similar topics or having shown interest in similar material; this boosts distribution beyond your existing target audience.</p>
+<p><span class="highlight">Engagement and Interaction</span>: Medium is designed as an interactive environment where readers engage with blog posts through comments, highlights and recommendations - providing you with direct connections between you and readers allowing feedback exchange and meaningful dialogues to take place between readers and writers alike. Publishing via Medium unlocks an active community of both readers and writers for maximum interaction potential and relationship formation.</p>
+<p><span class="highlight">SEO Benefits</span>: Medium boasts an outstanding domain authority and search-engine-optimization platform, so when you publish blog posts on Medium they benefit from Medium’s SEO efforts to rank highly on search engine results pages (SERPs). This increases your blog post being found through organic searches bringing more traffic your way.</p>
+<p><span class="highlight">Simple Technical Setup</span>: Medium is designed with minimal technical setup in mind, giving you time and freedom to focus on producing content without managing hosting, domain setup or CMS maintenance responsibilities. With its user-friendly interface and intuitive editor, Medium provides everything needed for writing and formatting blog posts efficiently.</p>
+<p><span class="highlight">Networking and Collaboration</span>: Medium is a platform where writers, thought leaders, professionals and potential collaborators from diverse domains converge. Publishing on Medium makes your work visible to an international network of professionals, influencers and potential collaborators; you have an excellent opportunity for networking as you connect with like-minded individuals as you explore collaboration opportunities that could further extend your reach while building up your reputation.</p>
+<p><span class="highlight">Brand Building and Authority</span>: Publishing high-quality content regularly on Medium helps establish your brand presence and authority within its niche. By sharing insights, expertise and discussing relevant topics you become an authoritative source, resulting in more people trusting what your contributions on Medium have to say over time - creating credibility with their contributions becoming followers for your brand!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syndicating-the-content-across-multiple-channels"><a class="header" href="#syndicating-the-content-across-multiple-channels">Syndicating the content across multiple channels</a></h1>
+<p>Content distribution across various channels can be extremely valuable for several reasons:</p>
+<p><span class="highlight">Expanded Reach</span>: Through syndication, content can reach beyond any one platform. By dispersing it via multiple social media, websites, newsletters or partner platforms you are increasing its exposure and reaching more viewers, readers or customers who might not otherwise discover your work. This broadened audience helps draw new eyes onto it that would otherwise never discover you!</p>
+<p><span class="highlight">Target Audiences</span>: With different channels catering to specific audience segments, syndicating content across channels allows you to tailor its messaging and delivery specifically towards target audiences. You could adapt content specifically tailored towards developers on technical blogs; engage business audiences on LinkedIn; or showcase visual content via platforms like Instagram - this targeted approach ensures your message resonates with its intended target audiences, increasing engagement rates and conversion rates as a result.</p>
+<p><span class="highlight">Diversified Engagement</span>: People have different tastes in regards to what kind of content they prefer consuming, so syndicating across various channels allows you to meet each person’s preferences by offering various formats like blog posts, videos, podcasts or infographics - this ensures greater engagement from a wider range of people who come across your work.</p>
+<p><span class="highlight">Improved SEO and Backlinks</span>: Repurposing content across popular platforms can enhance your search engine optimization (SEO) efforts, with increased chances of earning backlinks from other websites - which has an immediate positive effect on search rankings and increases traffic to your website or blog while building authority online.</p>
+<p><span class="highlight">Brand Consistency and Recognition</span>: Broadcasting your brand consistently across various channels can strengthen brand identity and increase recognition by familiarizing audiences with it across platforms; audiences then begin associating your content with you over time, increasing audience engagement and conversion rates. This tactic ensures audience loyalty while building recognition of your brand across different mediums.</p>
+<p><span class="highlight">Partnerships and Collaboration</span>: Syndication is an opportunity for partnerships and collaboration among content creators or influencers, offering you new audience reach by publishing on partner platforms or co-publishing with industry experts. By doing this, these collaborations introduce your brand to new communities while strengthening credibility while producing cross-promotion that benefits all involved parties involved.</p>
+<p><span class="highlight">Content Repurposing</span>: Syndication provides an ideal vehicle for reusing existing content, adapting it for different platforms such as blogs or video tutorials - or extract key points for social media series posts - or create slide deck presentations to reach wider audiences with minimal additional work required. Repurposing allows your existing work to maximize value and extend lifespan while reaching new ones easily and cost effectively.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="turning-the-written-text-into-multimedia-content"><a class="header" href="#turning-the-written-text-into-multimedia-content">Turning the written text into multimedia content</a></h1>
+<p>Converting written text into multimedia content is of utmost significance for several reasons, among them being:</p>
+<p><span class="highlight">Increased Engagement</span>: Multimedia content, such as videos, infographics or podcasts can significantly boost engagement over plain text content. By catering to different learning styles and preferences, multimodality can make text much more approachable for wider audiences - captivating them more quickly to spend more time engaging with your material! This strategy has proven highly successful for companies.</p>
+<p><span class="highlight">Improved Information Retention</span>: Studies have demonstrated the power of multimedia content in improving information retention compared to written text alone. Visuals, audio, and interactive elements help communicate complex ideas more clearly for easier comprehension and recall by your target audience. By including multimedia elements into your content creation efforts you can facilitate better knowledge absorption while creating more enjoyable experiences for them.</p>
+<p><span class="highlight">Expanded Reach and Accessibility</span>: Multimedia content has the advantage of being easily shareable across platforms and channels, including social media, website embeddings, or video-sharing websites and podcast directories. This makes your message accessible to new audiences who prefer multimedia formats - potentially drawing in new subscribers who prefer multimedia consumption formats! Furthermore, multimedia also improves accessibility for individuals with diverse learning abilities or disabilities.</p>
+<p><span class="highlight">Visual Storytelling</span>: Multimedia content allows you to harness the power of visual storytelling by weaving visuals, audio and narrative together into compelling experiences for your target audience. Through visual storytelling you can evoke emotions while conveying brand personality while leaving an indelible mark in their memories; also helping communicate complex ideas more engagingly and memorable.</p>
+<p><span class="highlight">Leveraging Multiple Channels</span>: Multimedia content allows you to leverage various platforms and channels for content distribution, from YouTube and SlideShare videos and slideshows, to podcast directories or directories that list podcasts. By diversifying content formats you reach more viewers who may discover and share it - increasing its chance of discovery and adoption by consumers and potential advertisers alike.</p>
+<p><span class="highlight">Enhanced Social Sharing</span>: Multimedia content is easily shareable across social media platforms, and people tend to share videos, images or interactive material more readily than text-based posts. By turning written text into visually appealing multimedia material you can increase its social sharing behavior - further expanding its reach while drawing in new followers, readers or viewers for your message.</p>
+<p><span class="highlight">Diversifying and Gaining Competitive Edge</span>: In an ever-evolving digital space, multimedia content gives your brand an edge against its competition. By offering multimedia experiences to customers and creating unique value propositions with multimedia experiences, multimedia shows your creativity, expertise, and dedication towards producing top-quality material, all qualities which could position you as the go-to expert for an industry and create loyal following.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="engaging-with-developer-communities-on-social-media"><a class="header" href="#engaging-with-developer-communities-on-social-media">Engaging with developer communities on social media</a></h1>
+<p>Engaging with developer communities on social media is vitally important for multiple reasons. Here are a few highlights which demonstrate this significance:</p>
+<p><span class="highlight">Building Relationships</span>: Social media platforms offer an incredible platform to forge relationships with developers. By actively engaging them by answering their queries or showing genuine enthusiasm about their work, social media allows you to build connections which may eventually lead to collaboration, knowledge-sharing and mutual support between yourself and them.</p>
+<p><span class="highlight">Extending Reach</span>: Social media platforms boast wide user bases with powerful sharing features, making engaging with developer communities across these channels the key to expanding reach and increasing brand, product, and initiative visibility. When people share your content among their networks or participate in discussions related to it - or engage directly with it themselves - organic growth often follows and can attract even more developers into your ecosystem.</p>
+<p><span class="highlight">Staying Informed</span>: Developer communities on social media offer invaluable insight, industry trends, and up-to-the-minute knowledge about technologies, tools, and best practices that affect them. Engaging with these communities allows you to stay abreast of issues pertaining to developers; understand their challenges and interests better, as well as tailor your strategies and offerings accordingly.</p>
+<p><span class="highlight">Collecting Feedback and Insights</span>: Social media platforms provide invaluable opportunities to gather real-time developer insights through engagement with developer communities on these platforms, which enables real-time feedback collection, understanding pain points and pinpointing improvement areas - feedback which can shape product roadmaps, drive decision making processes and ultimately help create more fulfilling developer experiences.</p>
+<p><span class="highlight">Support and Assistance</span>: Developers often look to social media channels for support and assistance when facing problems in their development projects. By actively engaging them and responding swiftly, as well as offering helpful resources that solve immediate needs quickly and create trust-filled relationships within developer communities - you show that you care. This action not only solves immediate issues but builds lasting loyalty that strengthens long-term solutions.</p>
+<p><span class="highlight">Opportunities for Collaboration</span>: Social media engagement can open doors to significant collaborative opportunities with developers. They might approach you with partnership proposals, joint project requests or requests for contributions; creating an environment conducive to cooperation means you can form alliances that leverage collective expertise while co-creating solutions which benefit both you and the developer community alike.</p>
+<p><span class="highlight">Brand Advocacy</span>: By engaging with developer communities online through social media platforms like social media platforms such as LinkedIn or Twitter, companies can turn developers into brand advocates. When positive experiences with your products, services, engagement efforts or engagement strategies arise among developers they tend to share them on their personal networks as a form of word-of-mouth promotion which boosts brand image while simultaneously drawing more developers to your community. This organic growth could significantly elevate reputation while simultaneously growing new membership bases within it.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="offering-incentives"><a class="header" href="#offering-incentives">Offering Incentives</a></h1>
+<p>“Money is a motivator” - Frederick Taylor’s motivation Theory</p>
+<p>Offering incentives is a common practice across industries, from business and marketing to motivation and developer relations. Offering incentives can be used as an engaging tactic that builds community while driving desired behaviors - here are some key points about offering incentives:</p>
+<p><span class="highlight">Engagement and Participation</span>: Incentivizing developers is key to increasing engagement within your developer community, such as attending events, contributing to open source projects, offering feedback or joining forums or discussions. Offering incentives like rewards, recognition or access to exclusive resources will encourage developers to actively take part.</p>
+<p><span class="highlight">Motivation and Adoption</span>: Incentives can motivate developers to use your platform, APIs or technologies. By offering rewards such as discounts or credits on rewards you offer developers will use them and adopt your services into their projects - creating an increased adoption and positive feedback loop as more developers utilize and promote your products and services.</p>
+<p><span class="highlight">Feedback and Improvement</span>: Incentivizing developers is one way of gathering feedback that is both timely and insightful. By offering incentives for providing feedback, reporting bugs or suggesting improvements you create an environment in which developers feel encouraged to share their experiences, challenges and suggestions - valuable feedback that helps identify areas for enhancement, prioritize feature requests and enhance developer satisfaction.</p>
+<p><span class="highlight">Recognition and Reputation</span>: Recognizing and rewarding developers can build their reputation amongst their peers within the developer community, cementing influencer status within this realm. Offering incentives like badges, certifications or special recognition programs demonstrates this appreciation while encouraging other developers to join and contribute their talents within that ecosystem. It not only motivates individual developers but also draws others in who want to join as contributors themselves!</p>
+<p><span class="highlight">Learning and Education</span>: Incentives can be an effective tool in encouraging developers’ education and skill development. By offering incentives to complete tutorials, workshops or training programs that meet certain criteria or participate in training programs that enhance knowledge acquisition or skills acquisition programs you encourage developers to increase knowledge while building new abilities - benefiting both them individually as well as your community by keeping everyone current with latest technologies and best practices.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="a-few-more-from-me"><a class="header" href="#a-few-more-from-me"><img src='images/pp_profile.JPG' style="float: right; width: 150px; height: 150px;">…A few more from me</a></h1>
+<p>“Every developer learns in their own way” - Oliver A.</p>
+<p>Now here are a few more examples of my Distrubtion Strategies:</p>
+<p><span class="highlightme">Guest Blogging</span>: Guest blogging involves contributing content on other relevant websites or blogs in your industry or niche, drawing in readers through existing audiences of hosting sites as well as tapping into potential new readers through guest post contributions on other relevant platforms. It helps establish credibility, expand reach, and drive traffic back to your own site/blog; when selecting authoritative websites for guest blogging it ensures optimal impact and results in increased readership for both websites involved and guest contributors themselves.</p>
+<p><span class="highlightme">Podcast Interviews</span>: Podcast interviews provide an excellent platform to showcase your expertise to a specific target audience. By appearing as a guest on relevant podcasts, you can reach listeners who share an interest in your field - podcasters often have followers who trust the host’s advice or expertise, making this platform invaluable when marketing brand or content to new audiences, creating thought leadership positions or forging relationships between hosts/listeners of podcasts and the brand/content being promoted. This strategy offers valuable connections, thought leadership positions and cultivates long term relationships that last beyond simply the interviewing.</p>
+<p><span class="highlightme">Influencer Partnerships</span>: Collaborating with influencers in your industry can significantly extend its reach and visibility. Influencers typically have established audiences who trust them, offering you access to their follower bases with highly engaged viewers - this may involve co-creating content together, featuring your brand or product within influencer posts or hosting joint webinars or events with them, all which increase brand recognition while driving traffic, leads and conversions for you!</p>
+<div id="admonition-what-it-takes-to-bring-1-million-african-devs-into-web3---converge22" class="admonition info">
+<div class="admonition-title">
+<p>What it Takes to Bring 1 Million African Devs into Web3 - Converge22</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.1.6.html#admonition-what-it-takes-to-bring-1-million-african-devs-into-web3---converge22"></a></p>
+</div>
+<div>
+<p>Here’s a link to one of my favourite videos about Web3, that talks about how we can onboard people into the Web3 spaces and things to consider. It’s one of the videos out there that has stimulated my thinking about how we can truly engage, grow and enhance the experience of developers.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/z7DIWZv7tpI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+</div>
+<div id="admonition-7-rules-for-engaging-and-growing-a-developer-community" class="admonition info">
+<div class="admonition-title">
+<p>7 Rules For Engaging and Growing a Developer Community.</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.1.6.html#admonition-7-rules-for-engaging-and-growing-a-developer-community"></a></p>
+</div>
+<div>
+<p>Blog Post that covers the topic of being able to effectviely engage and grow you developer community. Just one of the examples of researched content I came across to strategically inject and learn how to engage with a technical audience, when I transitioned from a developer to an  invidual who’d serve develops needs. <a href="https://ironhorse.io/growing-a-developer-community/">Check it out</a></p>
+</div>
+</div>
+<div id="admonition-so-you-want--to-be-a-developer-advocate-by-compressed" class="admonition info">
+<div class="admonition-title">
+<p>So you want  to be a Developer Advocate? by COMPRESSED</p>
+<p><a class="admonition-anchor-link" href="tutorials/page-1.1.6.html#admonition-so-you-want--to-be-a-developer-advocate-by-compressed"></a></p>
+</div>
+<div>
+<p>One of my favourite inspiration podcast listens. Sharing the details about the behind the scens of DevRel/ Developer Advocacy/ Technical Envangelism. Available of <a href="https://open.spotify.com/episode/4DBkTCKYC4B2GWbEgZzyCv?si=LzQmJtdUTgq1W3t3Ub2hcg">Spotify</a></p>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/pagetoc.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </body>
+</html>

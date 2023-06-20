@@ -1,0 +1,648 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Migrating from AWS Bucket to renterd - Sia Foundation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href="../././mdbook-admonish.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Tutorials</li><li class="chapter-item "><a href="../tutorials/introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../tutorials/page-1.0.html" class="active"><strong aria-hidden="true">2.</strong> Tutorials</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tutorials/page-1.0.html" class="active"><strong aria-hidden="true">2.1.</strong> Migrating from AWS Bucket to renterd</a></li></ol></li><li class="chapter-item "><a href="../tutorials/page-1.1.1.html"><strong aria-hidden="true">3.</strong> Distribution Strategy</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../tutorials/page-1.1.1.html"><strong aria-hidden="true">3.1.</strong> Publishing a blog post on Medium</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.2.html"><strong aria-hidden="true">3.2.</strong> Syndicating the content across multiple channels</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.3.html"><strong aria-hidden="true">3.3.</strong> Turning the written text into multimedia content</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.4.html"><strong aria-hidden="true">3.4.</strong> Engaging with developer communities on social media</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.5.html"><strong aria-hidden="true">3.5.</strong> Offering incentives</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.6.html"><strong aria-hidden="true">3.6.</strong> ...A few more</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sia Foundation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <h1 id="migrating-files-from-an-aws-bucket-to-renterd"><a class="header" href="#migrating-files-from-an-aws-bucket-to-renterd">Migrating Files from an AWS Bucket to <code>renterd</code></a></h1>
+<p><span class="highlight">Go</span>
+<span class="highlight">macOS</span>
+<span class="highlight">AWSBucket</span>
+<span class="highlight">macOS</span>
+<span class="highlight">renterd</span></p>
+<p>This tutorial will guide you through the process of building a utility in Go that retrieve files from an AWS bucket to <code>renterd</code>. We will cover the following topics:</p>
+<ol>
+<li>Installing the AWS SDK</li>
+<li>Setting up AWS credentials</li>
+<li>Preparing your Bucket</li>
+<li>Listing files in an AWS bucket</li>
+<li>Migrating files from the AWS bucket to <code>renterd</code></li>
+</ol>
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<h4 id="brew"><a class="header" href="#brew">Brew</a></h4>
+<p>To install <code>Homebrew</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>brew --version
+</code></pre>
+<h4 id="aws-cli"><a class="header" href="#aws-cli">AWS CLI</a></h4>
+<p>To install <code>AWS CLI</code> on macOS, open the Terminal and run following command and press Enter:</p>
+<pre><code>brew install awscli
+</code></pre>
+<p>Then run this command to check the lastest version has be installed succesfully:</p>
+<pre><code>aws --version
+</code></pre>
+<div id="admonition-note" class="admonition warning">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note"></a></p>
+</div>
+<div>
+<p>For the purpose of this tutorial, we will be demonstrating the process in Go. Go is the native language of the Sia platform, but feel free to adapt the concepts and logic presented here to your preferred programming language of choice by visiting <a href="https://docs.aws.amazon.com">here</a> to find AWS software development kits (SDKs).</p>
+</div>
+</div>
+#### Go
+<ol>
+<li>Before we begin, please make sure you have Go installed on your machine. You can download and <a href="https://golang.org">install Go</a> from the official website. Go is available on the following operating systems and versions:</li>
+</ol>
+<ul>
+<li><strong>Microsoft Windows</strong>: Windows 7 or later, Intel 64-bit processor.</li>
+<li><strong>Apple macOS (ARM64)</strong>: macOS 11 or later, Apple 64-bit processor.</li>
+<li><strong>Apple macOS (x86-64)</strong>: macOS 10.13 or later, intel 64-bit processor.</li>
+<li><strong>Linux</strong>: 2.6.32 or later, intel 64-bit processor.</li>
+</ul>
+<ol start="2">
+<li>Install Go and once the download is complete, open the downloaded package file <code>(.pkg)</code> and follow the instructions to install Go on your system. The installer will guide you through the installation process.</li>
+</ol>
+<h4 id="tutuorial-folder"><a class="header" href="#tutuorial-folder">Tutuorial Folder</a></h4>
+<p>Create a new directory for your <code>tutorial</code>, and <code>path/to/tutorial</code> then run:</p>
+<pre><code>go mod init your-project-name
+</code></pre>
+<h3 id="1-installing-the-aws-sdk"><a class="header" href="#1-installing-the-aws-sdk">1. Installing the AWS SDK</a></h3>
+<div id="admonition-heres-a-helping-hand" class="admonition info">
+<div class="admonition-title">
+<p>Here’s a helping hand!</p>
+<p><a class="admonition-anchor-link" href="#admonition-heres-a-helping-hand"></a></p>
+</div>
+<div>
+<p>If you’re new to AWS (Amazon Workflow Services), these helpful links:</p>
+<ul>
+<li>Familiarise yourself with <a href="https://aws.amazon.com/what-is-aws/">AWS</a> and the <a href="https://docs.aws.amazon.com/sdk-for-go/api/#:~:text=The%20AWS%20SDK%20for%20Go,against%20a%20web%20service%20interface.">AWS SDK for Go</a>.</li>
+<li>Basic understanding of <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_query-requests.html">HTTP requests</a>.</li>
+</ul>
+</div>
+</div>
+<p>To interact with AWS services, we need to install the AWS SDK for Go. The SDK provides us with the necessary libraries and tools to work with AWS services, including Amazon S3.</p>
+<p>Open up your terminal and run the following command:</p>
+<pre><code class="language-shell">go get github.com/aws/aws-sdk-go@latest
+</code></pre>
+<p>This command installs the latest AWS SDK for Go and its dependencies.</p>
+<h3 id="2-setting-up-aws-credentials"><a class="header" href="#2-setting-up-aws-credentials">2. Setting up AWS credentials</a></h3>
+<p>To access your AWS bucket, you need to set up your AWS credentials. These credentials consist of an Access Key ID and Secret Access Key associated with an IAM user that has the necessary permissions to access the AWS bucket.</p>
+<ol>
+<li>Go to your <a href="https://console.aws.amazon.com/console/home">AWS Management Console</a> and sign in. If you haven’t got an account create a new AWS account by completing the 5-step account creation process.</li>
+</ol>
+<div id="admonition-warning" class="admonition warning">
+<div class="admonition-title">
+<p>Warning</p>
+<p><a class="admonition-anchor-link" href="#admonition-warning"></a></p>
+</div>
+<div>
+<p>Your credit/debit card information will be requested in the account creation process so keep this handy.</p>
+</div>
+</div>
+<ol start="2">
+<li>
+<p>Open the IAM service by searching for “IAM” in the AWS Management Console search bar and selecting the IAM service.</p>
+</li>
+<li>
+<p>Create a new IAM user or use an existing one that has the necessary permissions to access the AWS bucket. </p>
+<p>a) This can be done firstly by clicking the “Users” link on the dashboard. Once the page, click the “Add Users” button to start creating a new IAM user. Then provide a name for the user in the “User name” field.</p>
+<p>b) When creating a new IAM user or using an existing one, choose an appropriate permission model based on your requirements. For the purpose of this tutorial, choose “Attach existing policies directly”, search for the <code>AmazonS3FullAccess</code> policy, and check the box next.</p>
+<p>c) Review the settings, click “Next,” add any optional tags, proceed to review the user’s details, and finally click “Create user.”</p>
+<p>d) The <code>access_key_id</code> and <code>secret_access_key</code> forthe new user will have not be created yet, but you can do this manually. After creating the user, you’ll be redirected to the “Users” page. Now click on the newly created user account. Click the “Security credentials” tab and scroll down to the “Access Keys” section and press “Create Access key”.</p>
+<p>e) You should now see a page called “Access key best practices &amp;  alternatives”. Select the “Command Line Interface” option and remember to check the at the bottom before proceeding by pressing “Next”.</p>
+<p>f) You can decide to create tags, but it’s not neccessary. Press the “Create Access Key” to generate the <code>access_key_id</code> and <code>secret_access_key</code>. </p>
+</li>
+</ol>
+<div id="admonition-make-a-note" class="admonition info">
+<div class="admonition-title">
+<p>Make a Note!</p>
+<p><a class="admonition-anchor-link" href="#admonition-make-a-note"></a></p>
+</div>
+<div>
+<p>Take note of the <code>access_key_id</code> and <code>secret_access_key</code> generated for the new user, as these credentials will be needed for programmatically accessing the S3 bucket.</p>
+</div>
+</div>
+<ol start="4">
+<li>Return back to your terminal to run the following command to configure the AWS CLI:</li>
+</ol>
+<pre><code class="language-shell">aws configure
+</code></pre>
+<ol start="5">
+<li>
+<p>Enter your <code>access_key_id</code> and <code>secret_access_key</code> when prompted.</p>
+</li>
+<li>
+<p>Choose a default AWS Region (e.g., <code>us-east-1</code>) and leave the output format as default.</p>
+</li>
+<li>
+<p>Set the output format as <code>json</code>.</p>
+</li>
+</ol>
+<div id="admonition-default" class="admonition success">
+<div>
+<p>Congratulations! The AWS CLI has saved the credentials in a configuration file located in your user’s home directory. The AWS CLI configuration is independent of your Go project. It sets up the credentials globally on your machine, and the Go SDK will automatically use them.</p>
+</div>
+</div>
+<h3 id="3-preparing-your-bucket"><a class="header" href="#3-preparing-your-bucket">3. Preparing your Bucket.</a></h3>
+<ol>
+<li>
+<p>Return back AWS Access Management page of your existing account, on “Users” page, click on the newly created user account. Click the “Security credentials” tab begin the enablement of the User to access the AWS Management Console by pressing the “Enable Console Access” button in the “Console sign-in” section.</p>
+</li>
+<li>
+<p>On the “User” page of the newly created user, there is a link in this format <code>hhtps://&lt;12-digit-account-id&gt;.signin.aws.amazon.com/console</code>, that will give you direct access to log into the AWS Access Management specific to the new user you’ve created.</p>
+</li>
+<li>
+<p>Login using <code>account_id</code> (should auto-populate after using the link), <code>iam_user_name</code>, and <code>password</code>. Once you’ve logged in, navigate to the S3 service on the “Console Home”.</p>
+</li>
+<li>
+<p>Let’s start uploading the files in the AWS bucket to see what we have for the listing segment of the tutorial. For the testing purposes, we can create 3 dummy text files (i.e., <code>file-1.rtf</code> <code>file-2.rtf</code> <code>file-3.rtf</code>). Upload these to the bucket for the next steps. </p>
+</li>
+</ol>
+<div id="admonition-cant-see-any-buckets" class="admonition info">
+<div class="admonition-title">
+<p>Can’t see any Buckets?</p>
+<p><a class="admonition-anchor-link" href="#admonition-cant-see-any-buckets"></a></p>
+</div>
+<div>
+<p>If you can’t see any buckets in the AWS S3 console, it may be because you haven’t created any buckets yet. Here are the steps to create a bucket:</p>
+<p>a) Click on the “Create bucket” button.</p>
+<p>b) Enter a name for your bucket, choose a region, and click “Create bucket”.</p>
+<p>c) Your new bucket should now appear in the list of buckets on the S3 console. Once you have created a bucket, you can upload files to it.</p>
+</div>
+</div>
+<h3 id="3-listing-files-in-an-aws-bucket"><a class="header" href="#3-listing-files-in-an-aws-bucket">3. Listing files in an AWS bucket</a></h3>
+<p>Now we can start by creating a <code>listfiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;log&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the list of files
+	for _, file := range files {
+		fmt.Println(file)
+	}
+}
+
+</code></pre>
+<div id="admonition-what-is-this-doing" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-is-this-doing"></a></p>
+</div>
+<div>
+<p>In this code snippet, we use the AWS SDK for Go to list objects in the specified AWS bucket. </p>
+<ul>
+<li>We create an AWS session and configure it with the desired AWS region.</li>
+<li>Using the session, we create an S3 service client.</li>
+<li>We specify the bucket name we want tolist objects from.</li>
+<li>We call the <code>ListObjectsV2</code> method on the S3 service client, passing the bucket name in the <code>Bucket</code> field of the <code>ListObjectsV2Input</code> struct.</li>
+<li>The response contains a list of objects in the bucket, and we iterate over them, printing out the object names.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run listfiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="#admonition-expected-output"></a></p>
+</div>
+<div>
+<pre><code>mypctest@tests-MacBook-Pro tutorial % go run listfiles.go
+file-1.rtf
+file-2.rtf
+file-3.rtf
+</code></pre>
+</div>
+</div>
+<div id="admonition-default-1" class="admonition success">
+<div>
+<p>Congratulations! This part of the tutorial helps us verify that we can successfully connect to the AWS bucket and retrieve a list of objects.</p>
+</div>
+</div>
+<h3 id="4-migrating-files-from-the-aws-bucket-to-renterd"><a class="header" href="#4-migrating-files-from-the-aws-bucket-to-renterd">4. Migrating files from the AWS bucket to <code>renterd</code></a></h3>
+<p>Now we can move on to migrating files from the AWS bucket to <code>renterd</code>. For the purpose of this tutorial, we will use the mocked <code>renterd</code> API endpoints instead of setting up a <code>renterd</code> node.</p>
+<p>Start by creating a <code>migratefiles.go</code> file inside our tutorial directory folder and implementing the following by adding the following code:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;bytes&quot;
+	&quot;fmt&quot;
+	&quot;io/ioutil&quot;
+	&quot;log&quot;
+	&quot;mime/multipart&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
+
+	&quot;github.com/aws/aws-sdk-go/aws&quot;
+	&quot;github.com/aws/aws-sdk-go/aws/session&quot;
+	&quot;github.com/aws/aws-sdk-go/service/s3&quot;
+)
+
+// Function to upload a file to the renterd API
+func uploadFileToRenterd(filePath string) error {
+	// Open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Create a new multipart buffer
+	body := &amp;bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	// Create a new form file field
+	part, err := writer.CreateFormFile(&quot;file&quot;, filePath)
+	if err != nil {
+		return err
+	}
+
+	// Read the file content and write it to the form field
+	fileContent, err := ioutil.ReadAll(file)
+	if err != nil {
+		return err
+	}
+	_, err = part.Write(fileContent)
+	if err != nil {
+		return err
+	}
+
+	// Close the writer
+	err = writer.Close()
+	if err != nil {
+		return err
+	}
+
+	// Create a new HTTP request to the renterd API endpoint
+	request, err := http.NewRequest(http.MethodPut, &quot;https://renterd-mock.sia.tools/api/worker/objects/&quot;+filePath, body)
+	if err != nil {
+		return err
+	}
+	request.Header.Set(&quot;Content-Type&quot;, writer.FormDataContentType())
+	request.SetBasicAuth(&quot;&quot;, &quot;&lt;auth-token&gt;&quot;) // Replace with the actual authentication token
+
+	// Make the request
+	client := &amp;http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	// Check the response status code
+	if response.StatusCode != http.StatusOK {
+		return fmt.Errorf(&quot;file upload failed with status code: %d&quot;, response.StatusCode)
+	}
+
+	return nil
+}
+
+// Function to list files in an AWS bucket
+func listFilesInBucket(bucketName string) ([]string, error) {
+	// Create a new AWS session
+	sess, err := session.NewSession(&amp;aws.Config{
+		Region: aws.String(&quot;&lt;region&gt;&quot;), // Replace with your desired region
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a new S3 service client
+	svc := s3.New(sess)
+
+	// Prepare the input parameters for listing objects in the bucket
+	params := &amp;s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	}
+
+	// Perform the list operation
+	resp, err := svc.ListObjectsV2(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Collect the file names
+	var files []string
+	for _, obj := range resp.Contents {
+		files = append(files, *obj.Key)
+	}
+
+	return files, nil
+}
+
+func main() {
+	// Replace &quot;&lt;your-bucket-name&gt;&quot; with the actual name of your AWS bucket
+	files, err := listFilesInBucket(&quot;&lt;your-bucket-name&gt;&quot;)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Iterate over the list of files and upload each file to renterd
+	for _, file := range files {
+		err := uploadFileToRenterd(file)
+		if err != nil {
+			log.Println(&quot;Failed to upload file&quot;, file, &quot;:&quot;, err)
+		} else {
+			log.Println(&quot;File&quot;, file, &quot;uploaded successfully&quot;)
+		}
+	}
+}
+</code></pre>
+<div id="admonition-what-is-this-doing-1" class="admonition note">
+<div class="admonition-title">
+<p>What is this doing?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-is-this-doing-1"></a></p>
+</div>
+<div>
+<p>This code snippet demonstrates how to migrate a file from the AWS bucket to <code>renterd</code> using the mocked <code>renterd</code> API endpoints. Here’s a breakdown of the code:</p>
+<ul>
+<li>We specify the AWS bucket URL and the <code>renterd</code> upload endpoint URL. You should replace these URLs with your actual values.</li>
+<li>We specify the object key (filename) of the file we want to migrate. In this particular case, we made it so it selects them all.</li>
+<li>We use the <code>http.Get</code> function to download the object from the AWS bucket.</li>
+<li>We create an upload request to the <code>renterd</code> API endpoint by creating an <code>http.NewRequest</code> with the <code>PUT</code> method and the <code>renterd</code> upload URL.</li>
+<li>We set the required HTTP basic authentication header using <code>req.SetBasicAuth</code> with an empty username and the provided auth token.</li>
+<li>We send the upload request using <code>client.Do(req)</code>.</li>
+<li>Finally, we check the response status. If it’s not <code>http.StatusOK</code>, we consider the upload as unsuccessful.</li>
+</ul>
+</div>
+</div>
+<p>Now run <code>go run migratefiles.go</code> inside your terminal where the tutorial directory is located.</p>
+<div id="admonition-expected-output-1" class="admonition success">
+<div class="admonition-title">
+<p>Expected Output</p>
+<p><a class="admonition-anchor-link" href="#admonition-expected-output-1"></a></p>
+</div>
+<div>
+<pre><code>2023/06/20 18:03:37 File file-1.rtf uploaded successfully
+2023/06/20 18:03:37 File file-2.rtf uploaded successfully
+2023/06/20 18:03:37 File file-3.rtf uploaded successfully
+</code></pre>
+</div>
+</div>
+<div id="admonition-youve-done-it" class="admonition success">
+<div class="admonition-title">
+<p>YOU’VE DONE IT🎉</p>
+<p><a class="admonition-anchor-link" href="#admonition-youve-done-it"></a></p>
+</div>
+<div>
+<p>Congratulations! </p>
+<p>You’ve built a utility in Go that allows us to migrate files from an AWS bucket to <code>renterd</code>. Here’s what you’ve accomplished, accomplish the following:</p>
+<p><strong>Installation of the AWS SDK</strong>: You’ve installed the AWS SDK for Go, which provides the necessary libraries and tools to interact with AWS services, including Amazon S3.</p>
+<p><strong>Setting up AWS credentials</strong>: You’ve configured the AWS credentials, consisting of an Access Key ID and Secret Access Key, to authenticate and access our AWS bucket,ensures that you have the necessary permissions to retrieve files from the bucket.</p>
+<p><strong>Prepared your Bucket</strong>: You’ve set up an AWS bucket environment for where you can test Listing and Migrate files.</p>
+<p><strong>Listing files in an AWS bucket</strong>: You’ve utilize the AWS SDK for Go to list the objects/files present in the AWS bucket. This step helps us verify our connectivity to the bucket and retrieve a list of files that can be migrated.</p>
+<p><strong>Migrating files from the AWS bucket to <code>renterd</code></strong>: You’ve demonstrated the process of migrating a file from the AWS bucket to <code>renterd</code>using the appropriate API endpoint. This step showcases the file migration process and confirms that the migration was successful.</p>
+</div>
+</div>
+<p>To get ahold of the complete tutorial, visit (Github)[]</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tutorials/introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../tutorials/page-1.0.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tutorials/introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../tutorials/page-1.0.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
+
+
+    </body>
+</html>
