@@ -14,7 +14,7 @@ My tutorial assignment has been written using mdbook. Please follow the instruct
    
    `cargo install mdbook-admonish`
 
-5) git clone https://github.com/iooa0023/trilitech_task.git
+5) git clone https://github.com/oliver-drda/sia_oliver_tutorial.git
 
 2) cd ../sia_oliver/sia_oliver
 
