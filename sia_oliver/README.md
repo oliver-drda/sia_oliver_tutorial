@@ -8,12 +8,13 @@ My tutorial assignment has been written using mdbook. Please follow the instruct
 2) Install mdBook
    `cargo install mdbook`
 
-3) Install admonshins
+3) Install both admonshins
 
-   `cargo install mdbook-admonshin`
+   `cargo install mdbook-admonish`
+   
    `cargo install mdbook-admonish`
 
-4) git clone https://github.com/iooa0023/trilitech_task.git
+5) git clone https://github.com/iooa0023/trilitech_task.git
 
 2) cd ../sia_oliver/sia_oliver
 
