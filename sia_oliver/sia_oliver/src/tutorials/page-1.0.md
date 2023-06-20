@@ -407,5 +407,5 @@ You've built a utility in Go that allows us to migrate files from an AWS bucket 
 
 ```
 
-To get ahold of the complete tutorial, visit (Github)[]
+To get ahold of the complete tutorial, visit [Github](https://github.com/oliver-drda/sia_oliver_tutorial/tree/main/sia_oliver/tutorial)
 
